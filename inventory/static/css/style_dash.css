@@ -1,0 +1,89 @@
+    /* General styles */
+    body {
+        background-color: #f4f7fc;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Center the form with margin from top */
+    .d-flex {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Align from top */
+        min-height: 100vh;
+        margin-top: 50px;
+    }
+
+    /* Card Styling - Rectangle Shape */
+    .card {
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        width: 600px; /* Adjust width to make it rectangular */
+        padding: 30px;
+        text-align: center;
+    }
+
+    /* Title Styling */
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+
+    /* Form Styling */
+    form {
+        text-align: left;
+    }
+
+    /* Labels */
+    .form-group label {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    /* Input Fields */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: 0.3s ease-in-out;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Submit Button */
+    .btn-success {
+        background: #28a745;
+        border: none;
+        padding: 12px;
+        width: 100%;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn-success:hover {
+        background: #218838;
+        cursor: pointer;
+    }
+
+    /* Fade-in animation */
+    .animated {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    }
+
+    .animated.fadeIn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
