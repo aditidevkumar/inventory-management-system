@@ -1,0 +1,82 @@
+{% extends 'inventory/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style_prod_detail.css' %}">
+<div class="d-flex">
+    <!-- Sidebar -->
+     <nav class="sidebar bg-dark text-light p-3 d-flex flex-column" style="width: 250px; height: 100vh; position: fixed;">
+        <h4 class="text-center">Dashboard</h4>
+        <ul class="nav flex-column flex-grow-1">
+            <li class="nav-item">
+                <a href="{% url 'product_list' %}" class="nav-link text-light">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'product_create' %}" class="nav-link text-light">Add Product</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'dashboard' %}" class="nav-link text-light">All Categories</a>
+            </li>
+        </ul>
+        <div class="mt-auto">
+            <a href="{% url 'logout' %}" class="btn btn-danger w-100">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-4" style="margin-left: 260px; width: calc(100% - 260px);">
+        <h2 class="text-left mb-3 text-uppercase font-weight-bold text-primary">All Categories</h2>
+
+        <div class="row">
+            <!-- Table Section -->
+            <div class="col-lg-10 col-md-12">
+                <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <div class="table-responsive" style="max-height: 70vh; overflow-y: auto;">
+                                <table class="table table-striped text-center">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Price (₹)</th>
+                                            <th>Stock</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for product in products %}
+                                        <tr>
+                                            <td>
+                                                {% if product.image %}
+                                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;">
+                                                {% else %}
+                                                <img src="{% static 'products/default.png' %}" alt="No Image Available" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;">
+                                                {% endif %}
+                                            </td>
+                                            <td class="align-middle">{{ product.name }}</td>
+                                            <td class="align-middle"><span class="badge badge-info text-dark">{{ product.category }}</span></td>
+                                            <td class="align-middle text-success font-weight-bold">₹{{ product.price }}</td>
+                                            <td class="align-middle text-dark">{{ product.stock }}</td>
+                                            <td class="align-middle">
+                                                <a href="{% url 'product_detail' product.pk %}" class="btn btn-outline-primary btn-sm">View</a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="6" class="text-muted text-center">No products available.</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>
+
+{% endblock %}

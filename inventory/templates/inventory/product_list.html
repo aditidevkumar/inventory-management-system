@@ -1,0 +1,144 @@
+{% extends 'inventory/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style_prod_detail.css' %}">
+<div class="d-flex">
+    <nav class="sidebar bg-dark text-light p-3 d-flex flex-column" style="height: 100vh;">
+        <h4 class="text-center">Dashboard</h4>
+        <ul class="nav flex-column flex-grow-1">
+            <li class="nav-item">
+                <a href="{% url 'product_list' %}" class="nav-link text-light">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'product_create' %}" class="nav-link text-light">Add Product</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'dashboard' %}" class="nav-link text-light">All Categories</a>
+            </li>
+        </ul>
+
+        <div class="mt-auto">
+            <a href="{% url 'logout' %}" class="btn btn-danger w-100">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Electronics Inventory</h2>
+
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <table class="table table-hover text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price (₹)</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td><span class="text-dark">{{ product.category }}</span></td>
+                            <td>₹{{ product.price }}</td>
+                            <td>
+                                <strong class="{% if product.stock < 3 %}text-danger{% endif %}">
+                                    {{ product.stock }}
+                                </strong>
+                            </td>
+                            <td>
+                                <a href="{% url 'product_update' product.pk %}" class="btn btn-warning btn-sm">✏️ Edit</a>
+                                <a href="{% url 'decrease_stock' product.pk %}" class="btn btn-danger btn-sm">🗑️ Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="row mt-2">
+            
+            <div class="col-md-4">
+                <div class="card text-white {% if category_stock.Mobile < 3 %}bg-danger{% else %}bg-info{% endif %} mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Mobile</h5>
+                        <p class="card-text">
+                            Total Stock: 
+                            <strong class="{% if category_stock.Mobile < 3 %}text-warning{% endif %}">
+                                {{ category_stock.Mobile|default:0 }}
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-white {% if category_stock.Laptop < 3 %}bg-danger{% else %}bg-primary{% endif %} mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Laptop</h5>
+                        <p class="card-text">
+                            Total Stock: 
+                            <strong class="{% if category_stock.Laptop < 3 %}text-warning{% endif %}">
+                                {{ category_stock.Laptop|default:0 }}
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-white {% if category_stock.Smartwatch < 3 %}bg-danger{% else %}bg-success{% endif %} mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Smartwatch</h5>
+                        <p class="card-text">
+                            Total Stock: 
+                            <strong class="{% if category_stock.Smartwatch < 3 %}text-warning{% endif %}">
+                                {{ category_stock.Smartwatch|default:0 }}
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        {% if category_stock.Mobile < 5 or category_stock.Laptop < 5 or category_stock.Smartwatch < 5 %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Low Stock Warning</h5>
+                        <p class="card-text">
+                            Some categories have low stock! Consider restocking:
+                            <ul>
+                                {% if category_stock.Mobile < 3 %}
+                                <li>Mobile: <strong>{{ category_stock.Mobile }}</strong> left</li>
+                                {% endif %}
+                                {% if category_stock.Laptop < 3 %}
+                                <li>Laptop: <strong>{{ category_stock.Laptop }}</strong> left</li>
+                                {% endif %}
+                                {% if category_stock.Smartwatch < 3 %}
+                                <li>Smartwatches: <strong>{{ category_stock.Smartwatch }}</strong> left</li>
+                                {% endif %}
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function toggleCategories() {
+        var categoryList = document.getElementById("category-list");
+        categoryList.style.display = (categoryList.style.display === "none") ? "block" : "none";
+    }
+</script>
+
+{% endblock %}

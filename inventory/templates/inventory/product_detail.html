@@ -1,0 +1,44 @@
+{% extends 'inventory/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style_prod_detail.css' %}">
+<div class="container mt-4" style="width: auto;">
+    <div class="d-flex">
+        <nav class="sidebar bg-dark text-light p-3 d-flex flex-column" style="width: 250px; height: 100vh; position: fixed;">
+        <h4 class="text-center">Dashboard</h4>
+        <ul class="nav flex-column flex-grow-1">
+            <li class="nav-item">
+                <a href="{% url 'product_list' %}" class="nav-link text-light">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'product_create' %}" class="nav-link text-light">Add Product</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'dashboard' %}" class="nav-link text-light">All Categories</a>
+            </li>
+        </ul>
+        <div class="mt-auto">
+            <a href="{% url 'logout' %}" class="btn btn-danger w-100">Logout</a>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-6">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="img-fluid rounded shadow" alt="{{ product.name }}">
+            {% else %}
+            <img src="{% static 'images/default.jpg' %}" class="img-fluid rounded shadow" alt="No Image">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2>{{ product.name }}</h2>
+            <p><strong>Category:</strong> {{ product.category }}</p>
+            <p><strong>Price:</strong> ₹{{ product.price }}</p>
+            <p><strong>Stock:</strong> {{ product.stock }}</p>
+            <p><strong>Description:</strong> {{ product.description }}</p>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Categories</a>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

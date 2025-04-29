@@ -1,0 +1,47 @@
+{% extends 'inventory/base.html' %}
+{% load widget_tweaks %}
+{% load static%}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style_product_form.css' %}">
+<link rel="stylesheet" href="{% static 'css/style_prod_detail.css' %}">
+<div class="d-flex">
+    <div class="card shadow-lg p-4 animated fadeIn">
+        <h2 class="text-center text-primary">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Product</h2>
+        <form method="post" enctype="multipart/form-data" class="mt-2">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>{{ form.name.label }}</label>
+                {{ form.name|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label>{{ form.category.label }}</label>
+                {{ form.category}}
+            </div>
+            <div class="form-group">
+                <label>{{ form.price.label }}</label>
+                {{ form.price|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label>{{ form.stock.label }}</label>
+                {{ form.stock|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label>{{ form.description.label }}</label>
+                {{ form.description|add_class:"form-control" }}
+            </div class="form-group">
+            <label>{{ form.image.label }}</label>
+                {{ form.image|add_class:"form-control" }}
+            <div>
+
+            </div>
+            <button type="submit" class="btn btn-success btn-block mt-3">Save Product</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
+
+
